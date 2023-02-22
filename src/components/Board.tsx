@@ -1,7 +1,8 @@
 import Square from "./Square";
 
-import styles from "../scss/Board.module.scss";
 import { FC } from "react";
+
+import styles from "../scss/Board.module.scss";
 
 type BoardProopsType = {
   squares: ("X" | "O")[];

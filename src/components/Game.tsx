@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import Board from "./Board";
+import Score from "./Score";
 import { calculateWinner } from "../utils/calculateWinner";
 
 import styles from "../scss/Game.module.scss";
@@ -9,6 +10,8 @@ const Game = () => {
   const [board, setBoard] = useState<("X" | "O")[]>(Array(9).fill(null));
   const [xIsNext, setXISNExt] = useState<boolean>(true);
   const [moves, setMoves] = useState<number>(0);
+  const [winnerX, setWinnerX] = useState<number>(0);
+  const [winnerO, setWinnerO] = useState<number>(0);
   const winner = calculateWinner(board);
 
   const handleClick = (i: number) => {
@@ -20,7 +23,6 @@ const Game = () => {
     setBoard(boardCopy);
     setXISNExt(!xIsNext);
     setMoves(moves + 1);
-    console.log(moves);
   };
 
   return (
@@ -30,6 +32,9 @@ const Game = () => {
         onClick={() => {
           setBoard(Array(9).fill(null));
           setMoves(0);
+          if (winner) {
+            xIsNext ? setWinnerO(winnerO + 1) : setWinnerX(winnerX + 1);
+          }
         }}
       >
         Clear board
@@ -45,6 +50,7 @@ const Game = () => {
           : "O's next move"}
         {}
       </p>
+      <Score xWins={winnerX} oWins={winnerO} />
     </div>
   );
 };
